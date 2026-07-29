@@ -1,4 +1,5 @@
 import { site } from "@/content/site";
+import { isUnfilled } from "@/lib/placeholder";
 import { Copy } from "./Copy";
 
 export function Footer() {
@@ -11,15 +12,24 @@ export function Footer() {
         <Copy>{footer.disclaimer}</Copy>
       </p>
 
+      {/* A link whose href is still [/terms] would resolve to a real URL and
+          land on a 404, so unfilled links render as plain text until they point
+          somewhere. */}
       <ul className="t-small mt-8 flex flex-wrap gap-x-6 gap-y-2">
         {footer.links.map((link) => (
           <li key={link.label}>
-            <a
-              className="underline decoration-rule underline-offset-4 transition-colors hover:text-paper hover:decoration-muted"
-              href={link.href}
-            >
-              <Copy>{link.label}</Copy>
-            </a>
+            {isUnfilled(link.href) ? (
+              <span className="text-muted">
+                <Copy>{link.label}</Copy>
+              </span>
+            ) : (
+              <a
+                className="underline decoration-rule underline-offset-4 transition-colors hover:text-paper hover:decoration-muted"
+                href={link.href}
+              >
+                <Copy>{link.label}</Copy>
+              </a>
+            )}
           </li>
         ))}
       </ul>

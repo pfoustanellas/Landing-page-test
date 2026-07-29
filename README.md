@@ -82,7 +82,13 @@ The "Get instant access" button appears five times and every one points at the s
 export const CTA_URL = "[CHECKOUT / PAYMENT LINK URL]";
 ```
 
-Paste your Stripe / Gumroad / Kajabi link there. Until you do, none of the buttons go anywhere.
+Paste your Stripe / Gumroad / Kajabi link there.
+
+Until you do, the buttons deliberately do nothing: they render greyed out with a
+"Link not set" note underneath. That's on purpose. A button pointing at
+`[CHECKOUT / PAYMENT LINK URL]` would look like it worked and send every visitor to a
+404 page. The moment you paste a real URL in, all five turn into working links
+automatically — you don't change anything else. The same applies to the footer links.
 
 ---
 

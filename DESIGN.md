@@ -331,3 +331,22 @@ sections open with a bare display heading and no tick-anchored label, breaking t
 rhythm exactly where the page is trying to close. The FAQ is the sharpest case: its `h2` is
 literally "FAQ" set at 52px in the display face. Not fixed, because the fix is a copy decision,
 not a design one: three short heading lines from the client would resolve all three at once.
+
+## Post-launch fix — placeholders must never become live destinations
+
+Reported as "it's not working." It was: every one of the five CTA buttons, plus the footer
+links, navigated to a 404. `href="[CHECKOUT / PAYMENT LINK URL]"` is a *relative URL*, so the
+browser resolved it against the origin and served a not-found page. The buttons looked
+completely functional right up until someone clicked one.
+
+Preserving the bracket placeholder was right. Feeding it into an `href` was not — a placeholder
+is content, and content is not a destination. Anything that turns a value from `site.ts` into a
+place the browser will go now checks `isUnfilled()` first (`lib/placeholder.ts`):
+
+- the CTA renders as an inert `<button disabled>` with the placeholder shown beneath it, and
+  becomes a real `<a href>` the moment `CTA_URL` holds a URL;
+- footer links render as plain text until their `href` points somewhere.
+
+Both paths are verified: with the placeholder in place nothing on the page links to a bracketed
+value and clicking a CTA does not navigate; with a real URL set, all five instances render as
+anchors carrying it. Next was also moved to 15.5.22, the patched release for CVE-2025-66478.

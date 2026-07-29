@@ -565,3 +565,14 @@ section {
     transition: none;
   }
 }
+
+/* An unfilled CTA_URL renders the button inert rather than linking to a 404.
+   See components/Cta.tsx. */
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn:disabled:hover {
+  background: var(--color-paper);
+}

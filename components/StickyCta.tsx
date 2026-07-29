@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { CTA_LABEL, CTA_URL, site } from "@/content/site";
+import { isUnfilled } from "@/lib/placeholder";
 import { Copy } from "./Copy";
 
 /* Mobile only (<768px). Appears once the hero has scrolled past, holding the
@@ -40,9 +41,19 @@ export function StickyCta() {
         <p className="t-small text-paper">
           <Copy>{site.pricing.price}</Copy>
         </p>
-        <a className="btn !w-auto min-h-[2.75rem] !px-5 text-[0.9375rem]" href={CTA_URL} tabIndex={visible ? 0 : -1}>
-          {CTA_LABEL}
-        </a>
+        {isUnfilled(CTA_URL) ? (
+          <button type="button" className="btn !w-auto min-h-[2.75rem] !px-5 text-[0.9375rem]" disabled>
+            {CTA_LABEL}
+          </button>
+        ) : (
+          <a
+            className="btn !w-auto min-h-[2.75rem] !px-5 text-[0.9375rem]"
+            href={CTA_URL}
+            tabIndex={visible ? 0 : -1}
+          >
+            {CTA_LABEL}
+          </a>
+        )}
       </div>
     </div>
   );

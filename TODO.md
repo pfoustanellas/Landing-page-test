@@ -16,7 +16,9 @@ Regenerate this list at any time with `node tools/collect-placeholders.mjs`.
 
 ## Start here — the three that block launch
 
-1. **`CTA_URL`** — every one of the five buttons points at it. Nothing sells until it's real.
+1. **`CTA_URL`** — every one of the five buttons points at it. Until it's set the buttons are
+   deliberately inert and greyed out rather than linking to a 404; they become working links
+   the moment you paste a real URL in.
 2. **`site.pricing.price`** — the price, which also feeds the mobile sticky bar.
 3. **`site.testimonials.items`** — four placeholder cards are currently visible. Either fill them
    with real, attributed quotes or delete the section; visible fake praise is worse than none.
