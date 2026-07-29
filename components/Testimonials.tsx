@@ -18,7 +18,7 @@ export function Testimonials() {
             as="li"
             key={i}
             delay={i * 70}
-            className="flex flex-col justify-between gap-6 rounded-[2px] border border-rule p-6 md:p-8"
+            className="flex flex-col justify-between gap-5 rounded-[2px] border border-rule p-5 md:p-6"
           >
             <blockquote className="t-lead t-bright">
               <p>

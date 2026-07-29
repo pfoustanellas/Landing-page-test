@@ -30,7 +30,7 @@ export function Section({
           <Copy>{heading}</Copy>
         </h2>
       </Reveal>
-      <div className="mt-[clamp(2rem,1.6rem+1.7vw,3.5rem)]">{children}</div>
+      <div className="mt-[clamp(1.5rem,1.28rem+0.94vw,2.25rem)]">{children}</div>
     </section>
   );
 }

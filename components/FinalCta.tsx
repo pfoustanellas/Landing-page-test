@@ -16,7 +16,7 @@ export function FinalCta() {
         <Copy>{finalCta.intro}</Copy>
       </Reveal>
 
-      <Reveal as="p" className="t-label mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal as="p" className="t-label mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <Copy>{finalCta.listIntro}</Copy>
       </Reveal>
 
@@ -28,7 +28,7 @@ export function FinalCta() {
         ))}
       </ul>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <h3 className="t-label">
           <Copy>{finalCta.guaranteeHeading}</Copy>
         </h3>
@@ -37,7 +37,7 @@ export function FinalCta() {
         </p>
       </Reveal>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]" delay={60}>
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]" delay={60}>
         <Cta microcopy={finalCta.ctaMicrocopy} />
       </Reveal>
     </Section>

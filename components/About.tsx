@@ -13,7 +13,7 @@ export function About() {
 
   return (
     <Section id="about" label={about.label} heading={about.name}>
-      <Reveal as="p" className="t-label -mt-4 mb-10">
+      <Reveal as="p" className="t-label -mt-3 mb-7">
         <Copy>{about.credential}</Copy>
       </Reveal>
 
@@ -26,7 +26,7 @@ export function About() {
               width={about.portrait.width}
               height={about.portrait.height}
               sizes="(min-width: 768px) 15rem, 100vw"
-              className="block h-auto w-full"
+              className="block h-auto max-h-[15rem] w-full object-cover md:max-h-none"
             />
           </div>
           <figcaption className="t-small mt-3 text-muted">
@@ -35,7 +35,7 @@ export function About() {
         </Reveal>
 
         <div>
-          <div className="measure space-y-5">
+          <div className="measure space-y-4">
             {about.body.map((paragraph, i) => (
               <Reveal as="p" key={i} delay={i * 60}>
                 <Copy>{paragraph}</Copy>
@@ -43,7 +43,7 @@ export function About() {
             ))}
           </div>
 
-          <Reveal className="mt-8 border-t border-rule pt-6">
+          <Reveal className="mt-6 border-t border-rule pt-5">
             <p className="measure t-bright">
               <Copy>{about.disclaimer}</Copy>
             </p>

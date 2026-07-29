@@ -11,7 +11,7 @@ export function Problem() {
 
   return (
     <Section id="problem" label={problem.label} heading={problem.heading}>
-      <div className="measure space-y-5">
+      <div className="measure space-y-4">
         {problem.body.map((paragraph, i) => (
           <Reveal as="p" key={i} delay={i * 60}>
             <Copy>{paragraph}</Copy>
@@ -19,13 +19,13 @@ export function Problem() {
         ))}
       </div>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <p className="t-h3 measure text-balance">
           <Copy>{problem.pullquote}</Copy>
         </p>
       </Reveal>
 
-      <div className="mt-[clamp(3rem,2.4rem+2.5vw,4.5rem)]">
+      <div className="mt-[clamp(2rem,1.72rem+1.22vw,3rem)]">
         <Reveal as="h3" className="t-label">
           <Copy>{problem.costHeading}</Copy>
         </Reveal>
@@ -39,7 +39,7 @@ export function Problem() {
         </ul>
       </div>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <p className="t-lead t-bright measure">
           <Copy>{problem.closer}</Copy>
         </p>

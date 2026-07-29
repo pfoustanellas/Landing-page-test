@@ -46,12 +46,12 @@ export function WhyThisWorks() {
         </table>
       </Reveal>
 
-      <div className="mt-[clamp(3.5rem,2.8rem+3vw,6rem)]">
+      <div className="mt-[clamp(2.5rem,2.1rem+1.69vw,3.75rem)]">
         <Reveal as="h3" className="t-label">
           <Copy>{whyThisWorks.whyNow.heading}</Copy>
         </Reveal>
 
-        <div className="measure mt-6 space-y-5">
+        <div className="measure mt-6 space-y-4">
           {whyThisWorks.whyNow.body.map((paragraph, i) => (
             <Reveal as="p" key={i} delay={i * 60} className={i === 2 ? "t-lead t-bright" : ""}>
               <Copy>{paragraph}</Copy>
@@ -60,7 +60,7 @@ export function WhyThisWorks() {
         </div>
       </div>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <Cta />
       </Reveal>
     </Section>

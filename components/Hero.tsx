@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="pt-[clamp(3.5rem,2.4rem+4.5vw,7.5rem)] pb-0"
+      className="pt-[clamp(2.25rem,1.75rem+2.1vw,4rem)] pb-0"
     >
       <Reveal className="reg">
         <p className="t-label">
@@ -25,7 +25,7 @@ export function Hero() {
         </p>
       </Reveal>
 
-      <div className="mt-[clamp(2.5rem,1.8rem+3vw,4.5rem)] grid gap-[clamp(2.5rem,1.5rem+4vw,4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start lg:gap-16">
+      <div className="mt-[clamp(1.75rem,1.45rem+1.3vw,2.75rem)] grid gap-[clamp(2.5rem,1.5rem+4vw,4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start lg:gap-16">
         <div>
           <Reveal>
             <h1 id="hero-heading" className="t-hero">
@@ -38,12 +38,12 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={80}>
-            <p className="t-lead measure mt-[clamp(1.75rem,1.4rem+1.5vw,2.5rem)]">
+            <p className="t-lead measure mt-[clamp(1.25rem,1.1rem+0.66vw,1.75rem)]">
               <Copy>{hero.subheadline}</Copy>
             </p>
           </Reveal>
 
-          <Reveal delay={160} className="mt-[clamp(2.25rem,1.8rem+2vw,3rem)]">
+          <Reveal delay={160} className="mt-[clamp(1.5rem,1.32rem+0.75vw,2.25rem)]">
             <Cta microcopy={hero.ctaMicrocopy} />
           </Reveal>
         </div>
@@ -57,7 +57,7 @@ export function Hero() {
               height={hero.media.height}
               priority
               sizes="(min-width: 1024px) 22rem, 100vw"
-              className="block h-auto w-full"
+              className="block h-auto max-h-[19rem] w-full object-cover sm:max-h-none"
             />
           </div>
           <figcaption className="t-small mt-3 text-muted">
@@ -69,7 +69,7 @@ export function Hero() {
       {/* Watched by the mobile sticky bar. */}
       <div id="hero-sentinel" aria-hidden="true" className="h-px" />
 
-      <Reveal className="mt-[clamp(3rem,2.2rem+3.4vw,5.5rem)] border-y border-rule py-4">
+      <Reveal className="mt-[clamp(2rem,1.72rem+1.22vw,3rem)] border-y border-rule py-3.5">
         <ul className="t-small flex flex-wrap gap-x-3 gap-y-1 text-muted">
           {/* The separator trails its own item so a wrapped line can never
               start with a stray middot. */}

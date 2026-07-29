@@ -350,3 +350,39 @@ place the browser will go now checks `isUnfilled()` first (`lib/placeholder.ts`)
 Both paths are verified: with the placeholder in place nothing on the page links to a bracketed
 value and clicking a CTA does not navigate; with a real URL set, all five instances render as
 anchors carrying it. Next was also moved to 15.5.22, the patched release for CVE-2025-66478.
+
+
+## Shortening pass — 22% off desktop, 15% off mobile, no copy cut
+
+Feedback: the page reads well but scrolls too far. The copy is signed off, so the length came out
+of the layout rather than the words.
+
+| | Before | After | Change |
+|---|---|---|---|
+| Desktop (1440) | 12,962px — 14.4 screens | 10,151px — 11.3 screens | −22% |
+| Mobile (375) | 16,917px — 18.8 screens | 14,391px — 16.0 screens | −15% |
+
+What changed:
+
+- **Section rhythm** from 88/176px to 56/104px between sections. Still the largest single interval
+  on the page and still clearly generous, just no longer a void.
+- **The two sequences became bands.** From 1024px up, each module row is three columns —
+  numeral, what-you'll-do, why-it-matters — instead of two stacked blocks, and each framework step
+  is numeral, title, body. Below 1024 the numeral hangs beside the title and the prose runs the
+  full column width instead of being indented past it, which is also a readability win on a phone.
+  The modules section alone dropped 716px on desktop and 625px on mobile.
+- **Leading 1.65 → 1.55** and lead paragraphs 1.55 → 1.45. Roughly 3% off the height of every
+  block of text on the page.
+- **Measure 62ch → 66ch**, so desktop paragraphs run fewer lines.
+- **Media slots capped on small screens.** A 4:5 portrait at full mobile width is ~385px tall;
+  the hero and the About portrait are now capped and cropped with `object-cover` below the
+  breakpoint, and unconstrained above it.
+- Row padding, card padding and internal block spacing trimmed throughout.
+
+Verified after the pass: desktop 100/100/100/100, mobile 97 performance / 100 accessibility,
+CLS still 0 at both sizes, no horizontal overflow at 375/768/1024/1440, one h1, heading order
+intact.
+
+**What's left is words, not spacing.** Mobile is still 16 screens because at 375px the page is
+almost entirely reflowed body copy — whitespace is no longer what's driving the height. Taking it
+materially below that means cutting copy, which is the client's call, not mine.

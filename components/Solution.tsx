@@ -12,7 +12,7 @@ export function Solution() {
 
   return (
     <Section id="solution" label={solution.label} heading={solution.heading}>
-      <div className="measure space-y-5">
+      <div className="measure space-y-4">
         <Reveal as="p">
           <Copy>{solution.intro}</Copy>
         </Reveal>
@@ -21,37 +21,35 @@ export function Solution() {
         </Reveal>
       </div>
 
-      <ol className="reg-list mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <ol className="reg-list mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         {solution.steps.map((step, i) => (
           <Reveal
             as="li"
             key={step.number}
             delay={i * 70}
-            className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 border-t border-rule py-6 last:border-b sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-x-8 sm:py-8"
+            className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-4 border-t border-rule py-5 last:border-b sm:grid-cols-[4rem_minmax(0,1fr)] sm:py-6 lg:grid-cols-[4.5rem_minmax(0,22ch)_minmax(0,1fr)] lg:gap-x-10"
           >
             <span aria-hidden="true" className="t-numeral">
               {step.number}
             </span>
-            <div className="max-w-[54ch]">
-              <h3 className="t-h3">
-                <span className="sr-only">{`Step ${step.number}: `}</span>
-                <Copy>{step.title}</Copy>
-              </h3>
-              <p className="mt-3">
-                <Copy>{step.body}</Copy>
-              </p>
-            </div>
+            <h3 className="t-h3 self-center lg:self-auto">
+              <span className="sr-only">{`Step ${step.number}: `}</span>
+              <Copy>{step.title}</Copy>
+            </h3>
+            <p className="col-span-2 mt-3 max-w-[62ch] lg:col-span-1 lg:col-start-3 lg:row-start-1 lg:mt-0">
+              <Copy>{step.body}</Copy>
+            </p>
           </Reveal>
         ))}
       </ol>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]">
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]">
         <p className="t-small measure text-muted">
           <Copy>{solution.credibilityLine}</Copy>
         </p>
       </Reveal>
 
-      <Reveal className="mt-[clamp(2.5rem,2rem+2vw,3.5rem)]" delay={60}>
+      <Reveal className="mt-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)]" delay={60}>
         <Cta />
       </Reveal>
     </Section>

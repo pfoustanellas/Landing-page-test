@@ -13,7 +13,7 @@ export function Pricing() {
 
   return (
     <Section id="pricing" label={pricing.label} heading={pricing.heading}>
-      <div className="border-t border-rule pt-8">
+      <div className="border-t border-rule pt-6">
         <Reveal>
           <p className="t-label">
             <Copy>{pricing.productName}</Copy>
@@ -35,12 +35,12 @@ export function Pricing() {
           <Copy>{pricing.paymentPlan}</Copy>
         </Reveal>
 
-        <Reveal className="mt-[clamp(2.25rem,1.8rem+2vw,3rem)]">
+        <Reveal className="mt-[clamp(1.5rem,1.32rem+0.75vw,2.25rem)]">
           <Cta microcopy={pricing.ctaMicrocopy} />
         </Reveal>
       </div>
 
-      <div className="mt-[clamp(3.5rem,2.8rem+3vw,6rem)] grid gap-[clamp(2.5rem,2rem+2vw,3.5rem)] md:grid-cols-2 md:gap-12">
+      <div className="mt-[clamp(2.5rem,2.1rem+1.69vw,3.75rem)] grid gap-[clamp(1.75rem,1.5rem+1.05vw,2.5rem)] md:grid-cols-2 md:gap-12">
         {[pricing.forYou, pricing.notForYou].map((group) => (
           <div key={group.heading}>
             <Reveal as="h3" className="t-label">

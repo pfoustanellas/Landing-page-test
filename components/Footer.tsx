@@ -7,7 +7,7 @@ export function Footer() {
 
   return (
     /* Extra bottom padding on mobile so the sticky bar never covers the last line. */
-    <footer className="border-t border-rule pt-12 pb-28 md:pb-12">
+    <footer className="border-t border-rule pt-10 pb-24 md:pb-10">
       <p className="t-small measure text-muted">
         <Copy>{footer.disclaimer}</Copy>
       </p>
@@ -15,7 +15,7 @@ export function Footer() {
       {/* A link whose href is still [/terms] would resolve to a real URL and
           land on a 404, so unfilled links render as plain text until they point
           somewhere. */}
-      <ul className="t-small mt-8 flex flex-wrap gap-x-6 gap-y-2">
+      <ul className="t-small mt-6 flex flex-wrap gap-x-6 gap-y-2">
         {footer.links.map((link) => (
           <li key={link.label}>
             {isUnfilled(link.href) ? (
@@ -34,7 +34,7 @@ export function Footer() {
         ))}
       </ul>
 
-      <p className="t-small mt-8 text-muted">
+      <p className="t-small mt-6 text-muted">
         <Copy>{footer.copyright}</Copy>
       </p>
     </footer>
