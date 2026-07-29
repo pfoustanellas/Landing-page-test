@@ -1,0 +1,567 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — see DESIGN.md for the reasoning behind every value.
+   ========================================================================== */
+
+@theme {
+  /* --- Palette. Warm dark: ink is hue ~20deg at 6% saturation, not blue-black. */
+  --color-ink: #131110;
+  --color-surface: #1b1817;
+  --color-paper: #f0ebe4;
+  --color-muted: #9c948b;
+  --color-rule: #2b2725;
+  --color-clay: #b4643f;
+
+  /* --- Faces (injected by next/font/local in app/layout.tsx) */
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), system-ui, -apple-system, sans-serif;
+
+  /* --- Fluid type scale. Ranges are 375px -> 1440px viewport. */
+  --text-hero: clamp(2.5rem, 1.53rem + 4.13vw, 5.25rem);
+  --text-h2: clamp(2rem, 1.56rem + 1.88vw, 3.25rem);
+  --text-h3: clamp(1.1875rem, 1.12rem + 0.19vw, 1.3125rem);
+  --text-lead: clamp(1.125rem, 1.06rem + 0.28vw, 1.3125rem);
+  --text-body: clamp(1.0625rem, 1.04rem + 0.09vw, 1.125rem);
+  --text-small: 0.875rem;
+  --text-label: 0.75rem;
+  --text-numeral: clamp(1.75rem, 1.49rem + 1.13vw, 2.5rem);
+
+  /* --- Rhythm */
+  --space-section: clamp(5.5rem, 3.56rem + 8.26vw, 11rem);
+  --space-gutter: clamp(1.25rem, -0.07rem + 5.63vw, 5rem);
+  --space-inset: clamp(1.75rem, 1.13rem + 2.63vw, 3.5rem);
+
+  --radius-edge: 2px;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-clay);
+  color: var(--color-paper);
+}
+
+/* One focus treatment for the whole page. Deliberate, not the browser default. */
+:focus-visible {
+  outline: 2px solid var(--color-paper);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ==========================================================================
+   Structure — the shell and the ledger rule (the page's signature element)
+   ========================================================================== */
+
+.shell {
+  position: relative;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}
+
+/* The hairline that runs the full height of the document. */
+.ledger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--space-gutter);
+  width: 1px;
+  background: var(--color-rule);
+  pointer-events: none;
+}
+
+/* The clay segment that fills to your scroll position. Scroll-driven in CSS —
+   no scroll listeners, nothing on the main thread. Static where unsupported. */
+.ledger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-clay);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ledger::after {
+      animation: ledger-fill linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes ledger-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Everything registers to the right of the rule. */
+.inset {
+  padding-left: var(--space-inset);
+}
+
+/* A section's registration tick on the rule. */
+.reg {
+  position: relative;
+}
+
+.reg::before {
+  content: "";
+  position: absolute;
+  top: 0.6em;
+  left: calc(-1 * var(--space-inset));
+  width: 10px;
+  height: 1px;
+  background: var(--color-clay);
+}
+
+/* --space-section is the rhythm *between* sections, so each side pays half. */
+section {
+  padding-block: calc(var(--space-section) / 2);
+}
+
+/* A sequence that registers directly against the ledger: each row's hairline
+   runs back to the rule and crosses it, so the rule reads as the spine the
+   register hangs off rather than a decorative border. Used only by the four
+   framework steps and the eight modules — the page's two real sequences. */
+.reg-list {
+  margin-left: calc(-1 * var(--space-inset));
+}
+
+.reg-list > li {
+  padding-left: var(--space-inset);
+}
+
+/* Measure. Body copy never exceeds this, at any breakpoint. */
+.measure {
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   Type roles
+   ========================================================================== */
+
+.t-hero {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 72, "wght" 350;
+  font-size: var(--text-hero);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-paper);
+  text-wrap: balance;
+}
+
+.t-h2 {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 48, "wght" 350;
+  font-size: var(--text-h2);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--color-paper);
+  text-wrap: balance;
+}
+
+.t-h3 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--text-h3);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-paper);
+}
+
+.t-lead {
+  font-size: var(--text-lead);
+  line-height: 1.55;
+}
+
+.t-small {
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+
+.t-label {
+  font-size: var(--text-label);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* The only emphasis mechanism on the page: a promotion from muted to paper. */
+.t-bright {
+  color: var(--color-paper);
+}
+
+/* Sequence numerals — used only in the four framework steps and the eight
+   modules, because those are the page's only genuine sequences. */
+.t-numeral {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 40, "wght" 300;
+  font-size: var(--text-numeral);
+  line-height: 1;
+  color: var(--color-clay);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ==========================================================================
+   Unfilled placeholders from the copy. Rendered visibly so the client can see
+   at a glance what still needs a real value. Every one is listed in TODO.md.
+   ========================================================================== */
+
+.ph {
+  text-decoration: underline dotted var(--color-clay);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+/* ==========================================================================
+   The one filled button on the page. Paper on ink — inverted, letterpress
+   logic. Nothing else on the page is filled, and nothing glows.
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding-inline: 1.875rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border-radius: var(--radius-edge);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-align: center;
+  transition:
+    background-color 160ms var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+
+.btn:hover {
+  background: #ffffff;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline-color: var(--color-clay);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* Full-width on the smallest screens — mobile is the primary experience. */
+@media (max-width: 479px) {
+  .btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Lists — hairline-separated rows, never bulleted marketing lists
+   ========================================================================== */
+
+.rule-list > li {
+  border-top: 1px solid var(--color-rule);
+  padding-block: 1rem;
+}
+
+.rule-list > li:last-child {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* ==========================================================================
+   The old-way / this-way comparison.
+
+   A real <table>. Mobile-first: each pair is one bordered block with both
+   sides labelled, so it still reads as a swap rather than as two lists.
+   From 768px up it becomes a two-column comparison you read across a shared
+   row rule, with a hairline down the middle as the axis.
+   ========================================================================== */
+
+.cmp {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Headers stay in the accessibility tree at mobile, just not on screen. */
+.cmp thead th {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cmp tbody tr {
+  display: block;
+  border-top: 1px solid var(--color-rule);
+  padding-block: 1.25rem;
+}
+
+.cmp tbody tr:last-child {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.cmp td {
+  display: block;
+}
+
+.cmp-tag {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.cmp-old {
+  color: var(--color-muted);
+  opacity: 0.72;
+}
+
+.cmp-old .cmp-tag {
+  color: var(--color-muted);
+}
+
+.cmp-new {
+  color: var(--color-paper);
+  margin-top: 1.125rem;
+}
+
+.cmp-new .cmp-tag {
+  color: var(--color-clay);
+}
+
+@media (min-width: 768px) {
+  .cmp thead th {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    padding-bottom: 1rem;
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    width: 50%;
+  }
+
+  .cmp thead th:last-child {
+    color: var(--color-clay);
+    padding-left: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .cmp tbody tr {
+    display: table-row;
+    border: 0;
+    padding: 0;
+  }
+
+  .cmp tbody tr:last-child {
+    border: 0;
+  }
+
+  .cmp td {
+    display: table-cell;
+    width: 50%;
+    vertical-align: top;
+    border-top: 1px solid var(--color-rule);
+    padding-block: 1.375rem;
+    padding-right: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .cmp tbody tr:last-child td {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  /* The axis the eye crosses. */
+  .cmp td:first-child {
+    border-right: 1px solid var(--color-rule);
+  }
+
+  .cmp td:last-child {
+    padding-right: 0;
+    padding-left: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .cmp-new {
+    margin-top: 0;
+  }
+
+  .cmp-tag {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   FAQ accordion. Native <details>/<summary>, so keyboard and screen-reader
+   behaviour is the browser's, not ours. Single-open is enforced in React.
+   ========================================================================== */
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.faq details {
+  border-top: 1px solid var(--color-rule);
+}
+
+.faq details:last-of-type {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.faq summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.25rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A hairline plus that loses its stroke when open. No chevron, no icon set. */
+.faq-mark {
+  position: relative;
+  flex: none;
+  width: 11px;
+  height: 11px;
+  margin-top: 0.5em;
+}
+
+.faq-mark::before,
+.faq-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--color-clay);
+  transition: transform 200ms var(--ease-out);
+}
+
+.faq-mark::before {
+  top: 5px;
+  left: 0;
+  width: 11px;
+  height: 1px;
+}
+
+.faq-mark::after {
+  top: 0;
+  left: 5px;
+  width: 1px;
+  height: 11px;
+}
+
+.faq details[open] .faq-mark::after {
+  transform: scaleY(0);
+}
+
+.faq-answer {
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+/* Height transition where the browser can do it natively; instant elsewhere. */
+@supports selector(::details-content) {
+  @media (prefers-reduced-motion: no-preference) {
+    .faq details::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 320ms var(--ease-out),
+        content-visibility 320ms allow-discrete;
+    }
+
+    .faq details[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-mark::before,
+  .faq-mark::after {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Scroll-in motion. Opacity plus a small translate, nothing else.
+   Fully disabled under prefers-reduced-motion.
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-shown="true"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

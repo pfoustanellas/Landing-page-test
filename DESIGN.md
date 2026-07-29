@@ -269,3 +269,65 @@ not on the problem bullets, not on the testimonials, not on the pricing inclusio
 The copy has three "delete if not offered" branches — community/group calls, payment plan, and the live-access
 FAQ answer. I'll render **both** branches with their brackets intact and list them in `TODO.md` as
 delete-one decisions, rather than picking for you. Say the word if you'd rather I default to omitting them.
+
+---
+
+## As built — where the finished page departs from this plan
+
+Six changes, all made during the build and all deliberate:
+
+1. **Section rhythm was halved.** The plan specified `padding-block: 176px`, which produces
+   *352px* between adjacent sections. On screen that stopped reading as generous and started
+   reading as broken. `--space-section` is now the gap *between* sections and each side pays
+   half, so the measured rhythm is the 88 / 120 / 176px the plan intended.
+2. **The mobile comparison lost its row numbers.** The plan said matched pairs would share "a
+   row number" at 375px. That would have been decorative numbering outside the two real
+   sequences — against this brief and against my own rule. The pairs are held together by the
+   OLD WAY / THIS WAY labels instead.
+3. **The FAQ height transition** is done with `::details-content` and `interpolate-size`
+   rather than `grid-template-rows`, so the accordion can stay native `<details>`/`<summary>`
+   and keep the browser's keyboard and screen-reader behaviour. It animates where supported and
+   opens instantly elsewhere.
+4. **Scroll-in reveals needed a safety net.** `IntersectionObserver` only reports threshold
+   *crossings*, so an element that skips the whole viewport between two frames — flick-scroll,
+   dragging the scrollbar, pressing End — never fires and would sit at `opacity: 0` for good.
+   This was caught in the 1440 screenshot, where a whole section rendered blank. `lib/reveal.ts`
+   now runs one shared observer plus a rAF-throttled sweep, and both tear themselves down once
+   everything has been revealed.
+5. **A typographic pass was added.** Straight apostrophes and quotes in the copy are rendered as
+   real typographic marks (`'` → `’`). No words are changed; at 84px in a serif, straight quotes
+   were the single most amateur thing on the page. It is one function in `components/Copy.tsx`
+   and deleting the call reverts it.
+6. **The ledger rule now registers the sequences directly** — see the critique below.
+
+## Self-critique against the brief, from the 375 and 1440 screenshots
+
+**1. The signature element was under-delivering.** The plan promised the rule would be "the
+page's spine, its measure, and its progress," with sections registering against it. As first
+built it carried exactly ten ticks across 12,772px — one per section — so for the overwhelming
+majority of its length it was an undifferentiated 1px grey line, visually identical to a
+decorative border. A measure with marks 1,300px apart is not a measure. Worse, the one place the
+page has a genuine dense sequence to register — the eight modules — drew its own full-width
+hairlines and ignored the rule completely. The boldness allowance was spent on something too
+quiet to be remembered. **This was the worst of the three, and it is the one I fixed:** the four
+framework steps and the eight modules now hang off the rule directly, each row's hairline
+running back to it and crossing it, so the rule becomes the spine the register hangs from — the
+`┼` structure this document's own wireframe drew. Twelve crossings where the sequences are real,
+quiet everywhere else.
+
+**2. The hero media slot is the weakest relationship on the page.** At 1440 the headline runs at
+84px across roughly 700px while the media sits in a 22rem column pinned top-right, top-aligned
+to the `h1` and ending nowhere in particular — not on the subheadline, not on the CTA, not on
+any horizontal the page establishes elsewhere. It reads as a rectangle parked beside the type
+rather than a composed pairing, and it leaves a soft void beneath it. At 375 it stacks and is
+fine. Desktop is where it is under-designed. Not fixed — it needs the real image to resolve
+properly, since the crop and tonal weight will drive the alignment.
+
+**3. Section labelling is inconsistent, and the FAQ heading is a label doing a heading's job.**
+Eight sections carry an eyebrow label above the `h2`; Testimonials and the Final CTA don't,
+because the approved copy gave those sections a title but no separate heading line. The sourcing
+is defensible — inventing a heading would have been worse — but the visible result is that two
+sections open with a bare display heading and no tick-anchored label, breaking the registration
+rhythm exactly where the page is trying to close. The FAQ is the sharpest case: its `h2` is
+literally "FAQ" set at 52px in the display face. Not fixed, because the fix is a copy decision,
+not a design one: three short heading lines from the client would resolve all three at once.
